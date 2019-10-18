@@ -2,6 +2,7 @@ from sense_hat import SenseHat
 from flask import Flask, jsonify, request
 from datetime import datetime
 import csv
+import math
 import json
 
 JSONFILE = 'sense-hat-data.json'
@@ -18,32 +19,32 @@ def get_sense_data():
 	gyro = sense.get_gyroscope_raw()
 	
 	# DateTime
-	sense_data.append(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+	sense_data.append(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
 	
 	# Environmental sensors
-	sense_data.append(sense.get_temperature())
-	sense_data.append(sense.get_pressure())
-	sense_data.append(sense.get_humidity())
+	sense_data.append(round(sense.get_temperature(), 4))
+	sense_data.append(round(sense.get_pressure(), 4))
+	sense_data.append(round(sense.get_humidity(), 4))
 	
 	# Orientation
-	sense_data.append(orientation["yaw"])
-	sense_data.append(orientation["pitch"])
-	sense_data.append(orientation["roll"])
+	sense_data.append(round(orientation["yaw"], 4))
+	sense_data.append(round(orientation["pitch"], 4))
+	sense_data.append(round(orientation["roll"], 4))
 	
 	# Raw compass readings
-	sense_data.append(mag["x"])
-	sense_data.append(mag["y"])
-	sense_data.append(mag["z"])
+	sense_data.append(round(mag["x"], 4))
+	sense_data.append(round(mag["y"], 4))
+	sense_data.append(round(mag["z"], 4))
 	
 	# Accelerometer readings
-	sense_data.append(acc["x"])
-	sense_data.append(acc["y"])
-	sense_data.append(acc["z"])
+	sense_data.append(round(acc["x"], 4))
+	sense_data.append(round(acc["y"], 4))
+	sense_data.append(round(acc["z"], 4))
 	
 	# Raw gyroscope readings
-	sense_data.append(gyro["x"])
-	sense_data.append(gyro["y"])
-	sense_data.append(gyro["z"])
+	sense_data.append(round(gyro["x"], 4))
+	sense_data.append(round(gyro["y"], 4))
+	sense_data.append(round(gyro["z"], 4))
 	
 	return sense_data
 
